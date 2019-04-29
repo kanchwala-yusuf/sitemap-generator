@@ -1,8 +1,13 @@
+certifi==2019.3.9
+chardet==3.0.4
 Click==7.0
 Flask==1.0.2
+idna==2.8
 itsdangerous==1.1.0
 Jinja2==2.10.1
 MarkupSafe==1.1.1
 PyYAML==5.1
+requests==2.21.0
 toml==0.10.0
+urllib3==1.24.2
 Werkzeug==0.15.2
