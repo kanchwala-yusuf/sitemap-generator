@@ -3,7 +3,7 @@ from crawl import Crawler
 
 # initializing parameters
 parser = argparse.ArgumentParser(description="Sitemap generator")
-parser.add_argument('--url', action="store", default="", help="For example https://www.finstead.com")
+parser.add_argument('--url', action="store", default="", help="Eg. 'https://www.mywebsite.com'")
 
 # parsing parameters
 args = parser.parse_args()

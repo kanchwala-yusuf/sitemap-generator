@@ -15,7 +15,7 @@ class Crawler:
 
         # urls
         self.url = url
-        self.domain = urlparse(self.url).netloc
+        self.domain = urlparse(self.url).netloc.lstrip("www.")
         self.base_url = self.get_base_url(self.url)
 
         # records
@@ -93,7 +93,7 @@ class Crawler:
                     response = urllib.request.urlopen(current_url)
                 except Exception as e:
                     logger.error("Failed to crawl url '%s'. Error: '%s'" % (current_url, e))
-                    self.failed_to_crawl.append({current_url: e})
+                    self.failed_to_crawl.append({current_url: str(e)})
                     return page_content, False
 
                 # Convert byte stream to string
@@ -205,8 +205,8 @@ class Crawler:
         elif link in self.to_crawl:
             logger.debug("link '%s' already in to_crawl list" % link)
             can_be_crawled = False
-        elif parsed_link.netloc != None and parsed_link.netloc != self.domain:
-            logger.debug("link '%s' in external domain '%s'" % (link, parsed_link.netloc))
+        elif parsed_link.netloc != None and not self.domain in parsed_link.netloc:
+            logger.debug("link '%s' in external domain '%s', domain to search '%s'" % (link, parsed_link.netloc, self.domain))
             can_be_crawled = False
         elif parsed_link.path in ["", "/"]:
             can_be_crawled = False
