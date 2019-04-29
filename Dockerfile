@@ -11,6 +11,6 @@ RUN apk add --no-cache python3 && \
 RUN mkdir -p /sitemap-generator
 WORKDIR /sitemap-generator
 
-COPY crawler .
+COPY * ./
 RUN pip install -r requirements.txt
 CMD ["/usr/bin/python3", "app.py"]

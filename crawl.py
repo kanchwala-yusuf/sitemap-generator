@@ -165,7 +165,11 @@ class Crawler:
                 is_valid = False
             elif link.startswith(("mailto", "tel")):
                 is_valid = False
-            elif not link.startswith(('http', "https")):
+            elif link.startswith(url.scheme):
+                if not link.lstrip(url.scheme + "://").startswith("www."):
+                    link = link.lstrip(url.scheme + "://")
+                    link = url.scheme + "://www." + link
+            elif not link.startswith((url.scheme)):
                 link = urljoin(current_url, link)
                 is_valid = True
 
@@ -205,7 +209,7 @@ class Crawler:
         elif link in self.to_crawl:
             logger.debug("link '%s' already in to_crawl list" % link)
             can_be_crawled = False
-        elif parsed_link.netloc != None and not self.domain in parsed_link.netloc:
+        elif parsed_link.netloc != None and parsed_link.netloc.lstrip("www.") != self.domain:
             logger.debug("link '%s' in external domain '%s', domain to search '%s'" % (link, parsed_link.netloc, self.domain))
             can_be_crawled = False
         elif parsed_link.path in ["", "/"]:

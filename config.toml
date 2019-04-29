@@ -1,0 +1,10 @@
+[server]
+url =  "http://localhost"
+port = "5002"
+
+# Valid values: local, server
+type = "local"
+
+[log]
+# Valid values: error, debug, info, warn
+level = "debug"
