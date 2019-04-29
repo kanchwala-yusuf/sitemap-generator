@@ -15,19 +15,29 @@ This project can be executed:
 
 ### Setup:
 * Clone this project on your setup.
-    ```sh
-    cd crawler
-    ```
 * It is a good practice to create *virtualenv*. To install **virtualenv** utiltiy refer [this](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments)
     ```sh
     virtualenv -p python3.5 venv
     source venv/bin/activate
     pip install -r requirements.txt
     ```
+* Setup the `config.toml` file:
+    Sample file:
+    ```sh
+	[server]
+	url =  ""
+	port = ""
 
+	# Valid values: local, server
+	type = "local"
+
+	[log]
+	# Valid values: error, debug, info, warn
+	level = "info"
+    ```
 
 Once the setup is done, we are ready to try it out locally.
-### Example
+### Using cli
 * Getting help:
     ```sh
     $ python sitemapctl.py -h
@@ -44,31 +54,51 @@ Once the setup is done, we are ready to try it out locally.
     $ python sitemapctl.py --url "https://www.somewebsite.com"
     ```
 
-### Logging
-Different levels of logging can be achieved by setting `LOG_LEVEL` env variable.
-Valid values of `LOG_LEVEL`: error, warn, info, debug. Default value is **info**
-    ```sh
-    export LOG_LEVEL=debug
-    ```
-
 ## Inside docker
-Inside docker an api server (listening at port 5002) is created so that sitemap-generator service can be available as a REST endpoint.
+Inside docker an api server is created so that sitemap-generator service can be available as a REST endpoint.
 
 ### Prerequisites:
 * Docker needs to be installed. Refer [this](https://docs.docker.com/install)
 
 ### Setup
 * Clone this project on your setup.
+* It is a good practice to create *virtualenv*. To install **virtualenv** utiltiy refer [this](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments)
+    ```sh
+    virtualenv -p python3.5 venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    ```
+* Setup the `config.toml` file:
+    Sample file:
+    ```sh
+	[server]
+	url =  "http://localhost"
+	port = "5002"
+
+	# Valid values: local, server
+	type = "server"
+
+	[log]
+	# Valid values: error, debug, info, warn
+	level = "debug"
+    ```
 * Create a docker image:
     ```sh
     docker build -t crawler:latest .
     ```
 * Run the docker container:
+    Make sure to use the correct port in the docker run command
     ```sh
-    docker run -e LOG_LEVEL=info -p 5002:5002 crawler:latest
+    docker run -p 5002:5002 crawler:latest
     ```
 
-### APIs
+### Using cli
+* Use of cli is the same as done for a local setup
+    ```sh
+    $ python sitemapctl.py --url "https://www.somewebsite.com"
+    ```
+
+### Using APIs
 * Health check:
     ```sh
     $ curl -i -H "Content-Type: application/json" -X GET http://localhost:5002/_health
