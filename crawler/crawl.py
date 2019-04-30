@@ -1,10 +1,10 @@
 import pprint
 import re
-import sitemap
 import urllib.request
-
-from common import logger as logger
 from urllib.parse import urlsplit, urlunsplit, urljoin, urlparse
+
+import crawler.sitemap as sitemap
+from crawler.common import logger as logger
 
 
 # Crawler

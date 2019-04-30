@@ -1,12 +1,12 @@
 import argparse
-import cfg
 import json
 import requests
 import sys
 import yaml
 
-from common import logger
-from crawl import Crawler
+import crawler.cfg as cfg
+from crawler.common import logger
+from crawler.crawl import Crawler
 
 
 # initializing parameters

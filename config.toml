@@ -3,7 +3,7 @@ url =  "http://localhost"
 port = "5002"
 
 # Valid values: local, server
-type = "local"
+type = "server"
 
 [log]
 # Valid values: error, debug, info, warn

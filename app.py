@@ -1,8 +1,8 @@
-import cfg
-from common import logger as logger
-from crawl import Crawler
 from flask import abort, Flask, jsonify, make_response, request
 
+import crawler.cfg as cfg
+from crawler.common import logger as logger
+from crawler.crawl import Crawler
 
 # Flask api server
 app = Flask(__name__)
