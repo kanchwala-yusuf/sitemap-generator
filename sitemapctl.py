@@ -39,6 +39,7 @@ def http_request(action, url, data, headers):
 
     logger.debug("Sending '%s' request: '%s'" % (action, url))
 
+    r = None
     try:
         if action == "delete" or action == "get":
             r = http_actions.get(action)(url, headers=headers)
@@ -57,36 +58,39 @@ def http_request(action, url, data, headers):
 # Driver
 if __name__ == "__main__":
 
-    # If local execution
-    if cfg.SERVER_TYPE == "local":
+    try:
+        # If local execution
+        if cfg.SERVER_TYPE == "local":
 
-        # initializeing crawler
-        crawler = Crawler(url);
+            # initializeing crawler
+            crawler = Crawler(url);
 
-        # fetch links
-        crawler.start()
+            # fetch links
+            crawler.start()
 
-    else:
+        else:
 
-        # Create server url
-        crawl_url = SERVER_URL + "/crawl"
+            # Create server url
+            crawl_url = SERVER_URL + "/crawl"
 
-        # request body
-        data = {"url": url}
+            # request body
+            data = {"url": url}
 
-        r = http_request("post", crawl_url, data, headers=HEADERS)
-        if r.status_code != 201:
-            logger.error("Failed to create sitemap for website: '%s'" % url)
-            sys.exit(1)
+            r = http_request("post", crawl_url, data, headers=HEADERS)
+            if r.status_code != 201:
+                logger.error("Failed to create sitemap for website: '%s'" % url)
+                sys.exit(1)
 
-        # Sitemap
-        sitemap = json.loads((json.loads(r.content.decode("utf-8"))).get('sitemap'))
+            # Sitemap
+            sitemap = json.loads((json.loads(r.content.decode("utf-8"))).get('sitemap'))
 
-        # sitemap yaml
-        sitemap_yaml = yaml.dump(sitemap, default_flow_style=False, allow_unicode=True)
-        print("sitemap YAML:\n%s" % sitemap_yaml)
+            # sitemap yaml
+            sitemap_yaml = yaml.dump(sitemap, default_flow_style=False, allow_unicode=True)
+            print("sitemap YAML:\n%s" % sitemap_yaml)
 
-        # Failed urls
-        failed = (json.loads(r.content.decode("utf-8"))).get('failed')
-        failed_yaml = yaml.dump(failed, default_flow_style=False, allow_unicode=True)
-        print("Failed to crawl urls:\n%s" % failed_yaml)
+            # Failed urls
+            failed = (json.loads(r.content.decode("utf-8"))).get('failed')
+            failed_yaml = yaml.dump(failed, default_flow_style=False, allow_unicode=True)
+            print("Failed to crawl urls:\n%s" % failed_yaml)
+    except Exception as e:
+            print("Error: '%s'" % e)

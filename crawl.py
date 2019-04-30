@@ -169,6 +169,7 @@ class Crawler:
                 if not link.lstrip(url.scheme + "://").startswith("www."):
                     link = link.lstrip(url.scheme + "://")
                     link = url.scheme + "://www." + link
+                is_valid = True
             elif not link.startswith((url.scheme)):
                 link = urljoin(current_url, link)
                 is_valid = True
