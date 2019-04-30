@@ -5,9 +5,9 @@ Project **sitemap-generator** helps a user create a sitemap tree of a given webs
 It crawls the given website, excludes external links (outside of the website domain) and from all the crawled paths/links creates a sitemap tree.
 
 This project can be executed:
-* On your local machine
-* Inside docker
-* On kubernetes cluster
+* [On your local machine](#on-your-local-machine)
+* [Inside docker](#inside-docker)
+* [On kubernetes cluster](#on-kubernetes-cluster)
 
 ## On your local machine
 
