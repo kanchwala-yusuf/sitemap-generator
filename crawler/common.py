@@ -1,5 +1,5 @@
 import logging
-import cfg
+import crawler.cfg as cfg
 
 if cfg.LOG_LEVEL == "warn":
     loglevel = logging.WARN

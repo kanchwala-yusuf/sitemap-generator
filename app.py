@@ -1,7 +1,8 @@
-from common import logger as logger
-from crawl import Crawler
 from flask import abort, Flask, jsonify, make_response, request
 
+import crawler.cfg as cfg
+from crawler.common import logger as logger
+from crawler.crawl import Crawler
 
 # Flask api server
 app = Flask(__name__)
@@ -41,4 +42,4 @@ def create_task():
 
 
 if __name__ == '__main__':
-    app.run(port='5002', debug=True, host='0.0.0.0')
+    app.run(port=cfg.PORT, debug=True, host='0.0.0.0')

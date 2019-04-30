@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: crawler
+  labels:
+    app: sitemap-generator
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: crawler-pod
+      labels:
+        app: sitemap-generator
+    spec:
+       containers:
+       - name: crawler
+         image: yusufk53/crawler:latest
+         livenessProbe:
+             httpGet:
+                 path: /_health
+                 port: 5002
+                 httpHeaders:
+                     - name: Content-Type
+                       value: application/json
+                     - name: Accept
+                       value: application/json
+         readinessProbe:
+             httpGet:
+                 path: /_health
+                 port: 5002
+                 httpHeaders:
+                     - name: Content-Type
+                       value: application/json
+                     - name: Accept
+                       value: application/json
+  selector:
+    matchLabels:
+      app: sitemap-generator
