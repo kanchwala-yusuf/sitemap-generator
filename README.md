@@ -1,6 +1,6 @@
 # sitemap-generator
 
-Project **sitemap-generator** helps a user create a sitemap tree of a given website.
+Project **sitemap-generator** written in python which helps a user create a sitemap tree of a given website.
 
 It crawls the given website, excludes external links (outside of the website domain) and from all the crawled paths/links creates a sitemap tree.
 
